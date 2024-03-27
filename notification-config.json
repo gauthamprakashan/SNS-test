@@ -1,0 +1,8 @@
+{
+    "TopicConfigurations": [
+        {
+            "TopicArn": "arn:aws:sns:us-east-1:960351580303:ImageDeletedTopic",
+            "Events": ["s3:ObjectRemoved:*"]
+        }
+    ]
+}

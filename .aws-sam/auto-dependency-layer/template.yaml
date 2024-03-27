@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  ImageDeletedTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: ImageDeletedTopic
+      TopicName: ImageDeletedTopic
+      AccessPolicy:
+        Version: '2012-10-17'
+        Id: example-ID
+        Statement:
+        - Sid: Example SNS topic policy
+          Effect: Allow
+          Principal:
+            Service: s3.amazonaws.com
+          Action: SNS:Publish
+          Condition:
+            StringEquals:
+              aws:SourceAccount: '960351580303'
+            ArnLike:
+              aws:SourceArn: arn:aws:s3:::sns-test1
+  EmailSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Protocol: email
+      Endpoint: itsgauthamp@gmail.com
+      TopicArn:
+        Ref: ImageDeletedTopic
+Outputs:
+  ImageDeletedTopicArn:
+    Value:
+      Ref: ImageDeletedTopic

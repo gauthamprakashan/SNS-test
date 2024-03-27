@@ -1,0 +1,56 @@
+
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Resources:
+  ImageDeletedTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      DisplayName: 'ImageDeletedTopic'
+      TopicName: 'ImageDeletedTopic'
+
+  ImageDeletedTopicPolicy:
+    Type: 'AWS::SNS::TopicPolicy'
+    Properties:
+      Topics:
+        - !Ref ImageDeletedTopic
+    
+      PolicyDocument: {
+        "Version": "2012-10-17",
+        "Id": "example-ID",
+        "Statement": [
+        {
+            "Sid": "Example SNS topic policy",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "s3.amazonaws.com"
+            },
+            "Action": "SNS:Publish",
+            "Resource": "arn:aws:sns:us-east-1:960351580303:ImageDeletedTopic", 
+            "Condition": {
+                "StringEquals": {
+                    "aws:SourceAccount": "960351580303"
+                },
+                "ArnLike": {
+                    "aws:SourceArn": "arn:aws:s3:::sns-test1"
+                }
+            }
+        }
+    ]
+}
+
+
+
+  
+
+  EmailSubscription:
+    Type: 'AWS::SNS::Subscription'
+    Properties:
+      Protocol: email
+      Endpoint: itsgauthamp@gmail.com   # Replace with your email address
+      TopicArn: !Ref ImageDeletedTopic
+Outputs:
+  ImageDeletedTopicArn:
+    Value: !Ref ImageDeletedTopic
+
