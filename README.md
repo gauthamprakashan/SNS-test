@@ -1,4 +1,4 @@
-# sam-app
+# SNS application which sends out a notification to your email on deletion of images from an S3 bucket. Used SAM to build this.
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. It includes the following files and folders.
 
